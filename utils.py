@@ -1,7 +1,9 @@
+import matplotlib.pyplot as plt
+import cv2
+import numpy as np
 from IPython import display
+
 def display_digits(digits, predictions, labels, title, n):
-    import matplotlib.pyplot as plt
-    import numpy as np
     '''
     Adapated from: https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_01_mnist.ipynb
     
@@ -35,3 +37,79 @@ def display_digits_line(digits, labels, title, n):
     for x in range(k, n, k):
         i = x - k
         display_digits_alt(digits[i:x], labels[i:x], title, k)
+
+
+def manual_label(digits):
+    labels = []
+    del_idx = []
+    for i, digit in enumerate(digits):
+        plt.axis('off')
+        plt.imshow(digit, cmap='gray')
+        plt.show()
+        is_valid_inp = lambda x : x.isdigit() and int(x) >= 0 and int(x) <= 9
+        
+        # walrus operator returns value
+        while not is_valid_inp(x := input()) and x != 'x':
+            print("please enter single digit or 'x'")
+            continue
+        
+        if is_valid_inp(x):
+            labels.append(int(x))
+        elif x == 'x':
+            del_idx.append(i)
+        
+        display.clear_output(wait=True)
+
+    digits = np.delete(digits, del_idx, 0)
+    
+    display.clear_output()
+    display_digits(digits, labels, labels, 'labelled', len(labels))
+    return labels
+
+def crop_number(img, verbose=False):
+    grey = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(grey.copy(), (5,5), 0)
+    _, thresh = cv2.threshold(blur.copy(),0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+    contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    contours_rect = [cv2.boundingRect(c) for c in contours]
+
+    small_param = 0.001
+    digits = []
+
+    for x,y,w,h in sorted(contours_rect):
+        
+        # filter out small rect
+        if w*h < small_param * img.shape[0] * img.shape[1]:
+            continue
+        
+        cv2.rectangle(img, (x,y), (x+w, y+h), color=(0,255,0), thickness=2)
+        
+        digit = thresh[y:y+h, x:x+w]
+        resized_digit = cv2.resize(digit, (18,18))
+        padded_digit = np.pad(resized_digit, 5, "constant", constant_values=0)
+        digits.append(padded_digit)
+
+    digits = np.array(digits)
+    if verbose:
+        plt.title('coutoured image')
+        plt.axis('off')
+        plt.imshow(img, cmap="gray")
+        plt.show()
+    return digits
+
+def str_today():
+    import datetime
+    tmp = str(datetime.date.today())
+    for s in "-:. ": tmp = tmp.replace(s, '')
+    return tmp
+
+def save_label_digit(digits, labels):
+    import glob
+    from itertools import count
+    tdy_processed_img = glob.glob(f'data/{str_today()}_*.png')
+    counter = count(len(tdy_processed_img) + 1)
+
+    for img,lbl in zip(digits, labels):
+        filename = f'{str_today()}_{next(counter)}_{lbl}.png' # png is lossless format
+        cv2.imwrite('data/'+filename, img)
