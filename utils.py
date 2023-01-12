@@ -1,7 +1,7 @@
+from IPython import display
 def display_digits(digits, predictions, labels, title, n):
     import matplotlib.pyplot as plt
     import numpy as np
-    
     '''
     Adapated from: https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_01_mnist.ipynb
     
@@ -24,4 +24,15 @@ def display_digits(digits, predictions, labels, title, n):
     plt.imshow(digits, cmap = 'gray_r')
     plt.grid(None)
     plt.title(title)
+    display.display(fig)
     plt.rcParams.update(plt.rcParamsDefault) # reset to default
+    
+def display_digits_alt(digits, labels, title, n):
+    display_digits(digits, labels, labels, title, n)
+
+def display_digits_line(digits, labels, title, n):
+    k = 16
+    n += n%k
+    for x in range(k, n, k):
+        i = x - k
+        display_digits_alt(digits[i:x], labels[i:x], title, k)
