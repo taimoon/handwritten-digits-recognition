@@ -4,3 +4,4 @@ __pycache__
 mnist_data
 *.pdf
 ignore_*
+*.docx
