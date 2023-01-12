@@ -64,7 +64,7 @@ def manual_label(digits):
     
     display.clear_output()
     display_digits(digits, labels, labels, 'labelled', len(labels))
-    return labels
+    return digits, labels
 
 def crop_number(img, verbose=False):
     grey = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2GRAY)
