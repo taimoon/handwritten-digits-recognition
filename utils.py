@@ -64,6 +64,7 @@ def manual_label(digits):
     
     display.clear_output()
     display_digits(digits, labels, labels, 'labelled', len(labels))
+    # display_digits_line(digits, labels,'', len(labels))
     return digits, labels
 
 def crop_number(img, verbose=False):
