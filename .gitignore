@@ -5,3 +5,4 @@ mnist_data
 *.pdf
 ignore_*
 *.docx
+raw image/*
