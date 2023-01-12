@@ -24,7 +24,6 @@ def display_digits(digits, predictions, labels, title, n):
     plt.imshow(digits, cmap = 'gray_r')
     plt.grid(None)
     plt.title(title)
-    display.display(fig)
     plt.rcParams.update(plt.rcParamsDefault) # reset to default
     
 def display_digits_alt(digits, labels, title, n):
