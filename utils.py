@@ -63,7 +63,7 @@ def manual_label(digits):
     digits = np.delete(digits, del_idx, 0)
     
     display.clear_output()
-    display_digits(digits, labels, labels, 'labelled', len(labels))
+    # display_digits(digits, labels, labels, 'labelled', len(labels))
     # display_digits_line(digits, labels,'', len(labels))
     return digits, labels
 

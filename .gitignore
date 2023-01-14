@@ -7,3 +7,4 @@ ignore_*
 *.docx
 raw image/*
 *.zip
+raw label
