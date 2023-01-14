@@ -32,10 +32,10 @@ def display_digits_line(digits, labels, pred, title, n):
     k = 16
     for x in range(k, n, k):
         i = x - k
-        display_digits_alt(digits[i:x], labels[i:x],pred[i:x], title, k)
+        display_digits(digits[i:x], labels[i:x],pred[i:x], title, k)
     if n%k != 0:
         r = n%k
-        display_digits_alt(digits[n-r:n], labels[n-r:n],pred[n-r:n], title,r)
+        display_digits(digits[n-r:n], labels[n-r:n],pred[n-r:n], title,r)
         
 def display_digits_alt(digits, labels, title, n):
     display_digits(digits, labels, labels, title, n)
