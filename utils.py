@@ -33,10 +33,12 @@ def display_digits_alt(digits, labels, title, n):
 
 def display_digits_line(digits, labels, title, n):
     k = 16
-    n += n%k
     for x in range(k, n, k):
         i = x - k
         display_digits_alt(digits[i:x], labels[i:x], title, k)
+    if n%k != 0:
+        r = n%k
+        display_digits_alt(digits[n-r:n], labels[n-r:n], title,r)
 
 
 def manual_label(digits):
@@ -75,21 +77,21 @@ def crop_number(img, verbose=False):
 
     contours_rect = [cv2.boundingRect(c) for c in contours]
 
-    small_param = 0.001
+    # small_param = 0.001
     digits = []
 
     for x,y,w,h in sorted(contours_rect):
         
         # filter out small rect
-        if w*h < small_param * img.shape[0] * img.shape[1]:
-            continue
+        # if w*h < small_param * img.shape[0] * img.shape[1]:
+            # continue
         
         cv2.rectangle(img, (x,y), (x+w, y+h), color=(0,255,0), thickness=2)
         
         digit = thresh[y:y+h, x:x+w]
-        resized_digit = cv2.resize(digit, (18,18))
-        padded_digit = np.pad(resized_digit, 5, "constant", constant_values=0)
-        digits.append(padded_digit)
+        # digit = cv2.resize(digit, (18,18))
+        # digit = np.pad(digit, 5, "constant", constant_values=0)
+        digits.append(digit)
 
     digits = np.array(digits)
     if verbose:
