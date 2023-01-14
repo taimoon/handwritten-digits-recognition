@@ -28,10 +28,19 @@ def display_digits(digits, predictions, labels, title, n):
     plt.title(title)
     plt.rcParams.update(plt.rcParamsDefault) # reset to default
     
+def display_digits_line(digits, labels, pred, title, n):
+    k = 16
+    for x in range(k, n, k):
+        i = x - k
+        display_digits_alt(digits[i:x], labels[i:x],pred[i:x], title, k)
+    if n%k != 0:
+        r = n%k
+        display_digits_alt(digits[n-r:n], labels[n-r:n],pred[n-r:n], title,r)
+        
 def display_digits_alt(digits, labels, title, n):
     display_digits(digits, labels, labels, title, n)
 
-def display_digits_line(digits, labels, title, n):
+def display_digits_alt_line(digits, labels, title, n):
     k = 16
     for x in range(k, n, k):
         i = x - k
@@ -39,7 +48,6 @@ def display_digits_line(digits, labels, title, n):
     if n%k != 0:
         r = n%k
         display_digits_alt(digits[n-r:n], labels[n-r:n], title,r)
-
 
 def manual_label(digits):
     labels = []
@@ -102,8 +110,10 @@ def crop_number(img, verbose=False):
     return digits
 
 
-def transform_cropped_digit(digits, labels):
+def transform_cropped_digit(digits, labels = None):
+    from itertools import repeat
     res = []
+    if labels is None: labels = repeat(None)
     for digit, label in zip(digits, labels):
         if label == 1: # requiring special treatment
             digit = cv2.resize(digit, (100,100))
