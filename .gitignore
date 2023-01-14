@@ -6,3 +6,4 @@ mnist_data
 ignore_*
 *.docx
 raw image/*
+*.zip

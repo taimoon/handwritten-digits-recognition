@@ -114,3 +114,6 @@ def save_label_digit(digits, labels):
     for img,lbl in zip(digits, labels):
         filename = f'{str_today()}_{next(counter)}_{lbl}.png' # png is lossless format
         cv2.imwrite('data/'+filename, img)
+
+def unpad(arr, width):
+    return arr[width:arr.shape[0]-width, width:arr.shape[1]-width]
