@@ -109,7 +109,6 @@ def crop_number(img, verbose=False):
         plt.show()
     return digits
 
-
 def transform_cropped_digit(digits, labels = None):
     from itertools import repeat
     res = []
