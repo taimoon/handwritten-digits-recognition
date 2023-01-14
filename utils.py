@@ -138,3 +138,14 @@ def save_label_digit(digits, labels):
 
 def unpad(arr, width):
     return arr[width:arr.shape[0]-width, width:arr.shape[1]-width]
+
+def get_data(n = None):
+    from os import listdir, path
+    digits, labels = [], []
+    for filename in listdir('data'):
+        digit = cv2.imread(path.join('data', filename))
+        digit = cv2.cvtColor(digit, cv2.COLOR_BGR2GRAY)
+        label = path.splitext(filename)[0][-1]
+        digits.append(digit)
+        labels.append(int(label))
+    return np.array(digits), np.array(labels)
