@@ -101,6 +101,25 @@ def crop_number(img, verbose=False):
         plt.show()
     return digits
 
+
+def transform_cropped_digit(digits, labels):
+    res = []
+    for digit, label in zip(digits, labels):
+        if label == 1: # requiring special treatment
+            digit = cv2.resize(digit, (100,100))
+            # (up,down), (left,right)
+            hpad_width = 150
+            vpad_width = 25
+            pad_width=((vpad_width,vpad_width),
+                       (hpad_width,hpad_width))
+            digit = np.pad(digit, pad_width=pad_width)
+            digit = cv2.resize(digit, (28,28))
+        else:
+            digit = cv2.resize(digit, (18,18))
+            digit = np.pad(digit, 5, "constant", constant_values=0)
+        res.append(digit)
+    return np.array(res)
+
 def str_today():
     import datetime
     tmp = str(datetime.date.today())
