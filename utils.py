@@ -158,3 +158,19 @@ def get_data(n = None):
         digits.append(digit)
         labels.append(int(label))
     return np.array(digits), np.array(labels)
+
+
+def plot_confusion_matrix(labels, pred_labels, ax = None):
+    import seaborn as sns
+    from sklearn.metrics import confusion_matrix
+    mat = confusion_matrix(labels, pred_labels)
+    sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False, ax=ax)
+    if ax is None:
+        plt.xlabel('true label')
+        plt.ylabel('predicted label')
+    else:
+        ax.set_xlabel('true label')
+        ax.set_ylabel('predicted label')
+    
+def inverse_one_hot(labels):
+    return [np.argmax(lbl) for lbl in labels]
