@@ -110,6 +110,13 @@ def crop_number(img, verbose=False):
     return digits
 
 def transform_cropped_digit(digits, labels = None):
+    ''' return array of 28*28 digits
+    the function has two mode:
+    
+    1. Not given `labels`, all digits are resized and padded
+    2. Given `labels`, numbered 1 digits will be resized but padded unequally then resize again, and other numbers are resized and padded the same
+    
+    '''
     from itertools import repeat
     res = []
     if labels is None: labels = repeat(None)
