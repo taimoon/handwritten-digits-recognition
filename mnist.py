@@ -1,3 +1,4 @@
+# mnist.py
 # source code file is an object too
 # let current file name be a context over the code below
 import numpy as np

@@ -9,3 +9,5 @@ raw image/*
 *.zip
 raw label
 cnn structure.png
+code.ipynb
+makenote.py
