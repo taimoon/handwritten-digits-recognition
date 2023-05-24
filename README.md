@@ -27,9 +27,9 @@ Scanned picture sized A6 (i.e.: A4 fold 2 times), then set to high constrast wor
 
 First milestone would be 1000 data labelled. a significant figures less than MNIST train dataset size.
 
-Second milestone is 10000 data labelled; same significant figures as MNIST train dataset size.
+~~Second milestone is 10000 data labelled; same significant figures as MNIST train dataset size.~~
 
-Third milesteon is 30000 data labelled; half of MNIST train dataset size.
+~~Third milesteon is 30000 data labelled; half of MNIST train dataset size.~~
 
 # Data Preprocessing
 
